@@ -13,9 +13,11 @@ class SweetsPage {
     return await this.browseHeading.isVisible();
   }
 
-  async addFirstItemToBasket() {
-    await this.addButtons.first().click();
-  }
+ async addFirstItemToBasket() {
+  await expect(this.addButtons.first()).toBeVisible();
+  await this.addButtons.first().click();
+}
+
 
   async addButtonCount() {
     return await this.addButtons.count();
