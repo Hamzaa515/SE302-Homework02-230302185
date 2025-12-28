@@ -2,16 +2,16 @@ class BasketPage {
   constructor(page) {
     this.page = page;
 
-    this.totalLabel = page.locator('text=Total');
-    this.emptyBasketBtn = page.locator('button', { hasText: 'Empty Basket' });
+    this.totalLabel = page.getByText('Total (GBP)');
+    this.emptyBasketLink = page.getByText('Empty Basket', { exact: true });
 
     this.promoCodeInput = page.locator('input[placeholder="Promo code"]');
-    this.redeemBtn = page.locator('button', { hasText: 'Redeem' });
+    this.redeemBtn = page.getByRole('button', { name: 'Redeem' });
 
-    this.checkoutBtn = page.locator('button', { hasText: 'Continue to checkout' });
+    this.checkoutBtn = page.locator('button', { hasText: 'Continue' });
 
     this.requiredMessages = page.locator('text=Required');
-    this.promoInvalidMsg = page.locator('text=Invalid promo code');
+    this.invalidPromoMessage = page.locator('text=Invalid');
   }
 
   async open() {
@@ -23,7 +23,7 @@ class BasketPage {
   }
 
   async emptyBasket() {
-    await this.emptyBasketBtn.click();
+    await this.emptyBasketLink.click();
   }
 
   async redeemPromo(code) {
@@ -35,7 +35,7 @@ class BasketPage {
     await this.checkoutBtn.click();
   }
 
-  async requiredCount() {
+  async requiredFieldCount() {
     return await this.requiredMessages.count();
   }
 }
