@@ -1,0 +1,11 @@
+{
+  "name": "se302-homework02-230302185",
+  "version": "1.0.0",
+  "description": "Playwright automated tests for SE302 Homework 02 using POM",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.42.0"
+  }
+}
