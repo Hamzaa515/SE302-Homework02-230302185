@@ -6,11 +6,9 @@ test('TC04 - Adding an item updates basket state', async ({ page }) => {
   const sweets = new SweetsPage(page);
   const header = new Header(page);
 
-  await sweets.open();
   await sweets.addFirstItemToBasket();
-
   await header.goToBasket();
 
-  await expect(page.getByText('Your Basket')).toBeVisible();
-  await expect(page.getByText('Total (GBP)')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Your Basket' })).toBeVisible();
+  await expect(page.getByText('Total (GBP)').first()).toBeVisible();
 });
