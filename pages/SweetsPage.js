@@ -5,11 +5,13 @@ class SweetsPage {
   }
 
   async open() {
-    await this.page.goto('/sweets');
+    await this.page.goto('/sweets', { waitUntil: 'domcontentloaded' });
+    await this.page.waitForLoadState('networkidle');
+    await this.addButtons.first().waitFor({ state: 'visible' });
   }
 
   async addFirstItemToBasket() {
-    await this.addButtons.first().waitFor({ state: 'visible' });
+    await this.open();
     await this.addButtons.first().click();
   }
 
