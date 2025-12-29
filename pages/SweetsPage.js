@@ -1,24 +1,26 @@
 class SweetsPage {
   constructor(page) {
     this.page = page;
-    this.products = page.locator('.card');
-    this.firstAddButton = this.products.first().locator('button');
+
+    this.productCards = page.locator('.card');
+    this.actionControls = page.locator('.card button, .card a');
   }
 
   async open() {
-    await this.page.goto('/sweets');
-    await this.products.first().waitFor({ state: 'visible' });
+    await this.page.goto('/sweets', { waitUntil: 'domcontentloaded' });
+    await this.page.waitForLoadState('networkidle');
+    await this.productCards.first().waitFor({ state: 'visible' });
+    await this.actionControls.first().waitFor({ state: 'visible' });
   }
 
   async addFirstItemToBasket() {
     await this.open();
-    await this.firstAddButton.click();
+    await this.actionControls.first().click();
   }
 
   async addButtonCount() {
-    return await this.page.locator('.card button').count();
+    return await this.actionControls.count();
   }
 }
 
 module.exports = SweetsPage;
-
