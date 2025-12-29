@@ -18,6 +18,7 @@ class SweetsPage {
   }
 }
 
-module.exports = { SweetsPage };
+module.exports = SweetsPage;
+
 
 
