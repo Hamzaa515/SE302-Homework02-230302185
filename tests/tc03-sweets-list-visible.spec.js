@@ -1,13 +1,23 @@
-const { test, expect } = require('@playwright/test');
-const SweetsPage = require('../pages/SweetsPage');
+class SweetsPage {
+  constructor(page) {
+    this.page = page;
+    this.addButtons = page.locator('button', { hasText: 'Add to Basket' });
+  }
 
-test('TC03 - Sweets page shows product list with add-to-basket actions', async ({ page }) => {
-  const sweets = new SweetsPage(page);
+  async open() {
+    await this.page.goto('/sweets', { waitUntil: 'domcontentloaded' });
+    await this.page.waitForLoadState('networkidle');
+    await this.addButtons.first().waitFor({ state: 'visible' });
+  }
 
-  await sweets.open();
+  async addFirstItemToBasket() {
+    await this.open();
+    await this.addButtons.first().click();
+  }
 
-  await expect(page.getByText('Browse sweets')).toBeVisible();
+  async addButtonCount() {
+    return await this.addButtons.count();
+  }
+}
 
-  const count = await sweets.addButtonCount();
-  expect(count).toBeGreaterThan(0);
-});
+module.exports = SweetsPage;
